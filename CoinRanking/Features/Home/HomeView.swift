@@ -15,55 +15,31 @@ struct HomeView: View {
     var body: some View {
         VStack{
             Text("Total coins: \(coins.count)")
-            ScrollView(showsIndicators: false) {
-                VStack{
-                    ForEach(coins, id: \.uuid){ item in
-                        Text(item.name)
-                            .padding(15)
-                            .frame(maxWidth: .infinity)
-                            .background(.gray.opacity(0.4))
-                            .cornerRadius(8)
-                            .onAppear{
-                                Task {
-                                    print("DEBUG: name \(item.name), item.uuid  \(item.uuid), coins.last?.uuid  \(coins.last?.uuid ?? "") isLast \(item.uuid == coins.last?.uuid )")
-
-                                    if shouldLoadMore(item: item) {
-                                        Task {
-                                            await fetchMoreData()
-                                        }
-                                    }
-                                }
-                            }
-                        
-                    }
-                    
-                    if homeViewModel.isFetching{
-                        ProgressView()
-                    }
+            List{
+                ForEach(coins, id: \.uuid) { item in
+                    Text(item.name)
+                        .padding(15)
+                        .frame(maxWidth: .infinity)
+                        .background(.gray.opacity(0.4))
+                        .cornerRadius(8)
                 }
-                .padding()
+                
+                Color.clear
+                    .onAppear {
+                        Task{ await fetchMoreData()}
+                    }
             }
-            .onAppear{
-                Task {
-                    coins = await homeViewModel.fetchData(limit: "\(limit)", offset: "\(offset)")
-                }
-            }
-            
+            .listStyle(.plain)
         }
     }
     
-    /*
-    func fetchMoreData() async{
-        offset += limit
-        coins += await homeViewModel.fetchData(limit: "\(limit)", offset: "\(offset)")
-    }
-    */
-    
     func fetchMoreData() async {
-        offset += limit
         let newCoins = await homeViewModel.fetchData(limit: "\(limit)", offset: "\(offset)")
         if newCoins.isEmpty { return }
-        coins += newCoins
+        for coin in newCoins {
+            coins.append(coin)
+        }
+        offset += limit
     }
     
     private func shouldLoadMore(item: Coin) -> Bool {
