@@ -17,7 +17,7 @@ struct HomeView: View {
             Text("Total coins: \(coins.count)")
             List{
                 ForEach(coins, id: \.uuid) { item in
-                    Text(item.name)
+                    Text(item.name ?? "--")
                         .padding(15)
                         .frame(maxWidth: .infinity)
                         .background(.gray.opacity(0.4))

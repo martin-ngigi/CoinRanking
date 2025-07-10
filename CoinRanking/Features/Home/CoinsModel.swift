@@ -16,18 +16,18 @@ struct DataClass: Codable {
 }
 
 struct Coin: Codable {
-    let uuid, symbol, name, color: String
-    let iconURL: String
-    let marketCap, price: String
-    let listedAt, tier: Int
-    let change: String
-    let rank: Int
-    let sparkline: [String]
-    let lowVolume: Bool
-    let coinrankingURL: String
-    let the24HVolume, btcPrice: String
-    let contractAddresses: [String]
-    let isWrappedTrustless: Bool
+    let uuid, symbol, name, color: String?
+    let iconURL: String?
+    let marketCap, price: String?
+    let listedAt, tier: Int?
+    let change: String?
+    let rank: Int?
+    let sparkline: [String]?
+    let lowVolume: Bool?
+    let coinrankingURL: String?
+    let the24HVolume, btcPrice: String?
+    let contractAddresses: [String]?
+    let isWrappedTrustless: Bool?
 
     enum CodingKeys: String, CodingKey {
         case uuid, symbol, name, color

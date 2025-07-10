@@ -36,6 +36,7 @@ class APICallUtil{
             return .failure(APICallError.custom("API Failed"))
         }
         catch {
+            print("DEBUG: API error; \(error)")
             return .failure(APICallError.custom(error.localizedDescription))
         }
     }
@@ -63,10 +64,13 @@ class APICallUtil{
             let decodedData = try JSONDecoder().decode(U.self, from: responseData)
             return .success(decodedData)
         } catch let error as URLError {
+            print("DEBUG: API error; \(error)")
             return .failure(APICallError.urlSession(error))
         } catch let decodingError as DecodingError {
+            print("DEBUG: decodingError error; \(decodingError)")
             return .failure(APICallError.decoding(decodingError))
         } catch {
+            print("DEBUG: API error; \(error)")
             return .failure(APICallError.custom(error.localizedDescription))
         }
     }
