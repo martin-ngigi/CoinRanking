@@ -12,16 +12,29 @@ struct HomeView: View {
     @State var coins: [Coin] = []
     @State var limit = 20
     @State var offset = 0
+    @StateObject var favouritesViewmodel = FavouritesViewmodel()
+
     var body: some View {
         VStack{
             Text("Total coins: \(coins.count)")
             List{
                 ForEach(coins, id: \.uuid) { item in
-                    Text(item.name ?? "--")
-                        .padding(15)
-                        .frame(maxWidth: .infinity)
-                        .background(.gray.opacity(0.4))
-                        .cornerRadius(8)
+                    HStack{
+                        Text(item.name ?? "--")
+                        
+                        Spacer()
+                        
+                        Button{
+                            favouritesViewmodel.saveCoin(coin: item)
+                        } label: {
+                            Image(systemName: "star")
+                        }
+                    }
+                    .font(.body)
+                    .padding(15)
+                    .frame(maxWidth: .infinity)
+                    .background(.gray.opacity(0.4))
+                    .cornerRadius(8)
                 }
                 
                 Color.clear

@@ -37,7 +37,55 @@ struct Coin: Codable {
         case the24HVolume = "24hVolume"
         case btcPrice, contractAddresses, isWrappedTrustless
     }
+    
+    init(
+        uuid: String? = nil,
+        symbol: String? = nil,
+        name: String? = nil,
+        color: String? = nil,
+        iconURL: String? = nil,
+        marketCap: String? = nil,
+        price: String? = nil,
+        listedAt: Int? = nil,
+        tier: Int? = nil,
+        change: String? = nil,
+        rank: Int? = nil,
+        sparkline: [String]? = nil,
+        lowVolume: Bool? = nil,
+        coinrankingURL: String? = nil,
+        the24HVolume: String? = nil,
+        btcPrice: String? = nil,
+        contractAddresses: [String]? = nil,
+        isWrappedTrustless: Bool? = nil
+    ) {
+        self.uuid = uuid
+        self.symbol = symbol
+        self.name = name
+        self.color = color
+        self.iconURL = iconURL
+        self.marketCap = marketCap
+        self.price = price
+        self.listedAt = listedAt
+        self.tier = tier
+        self.change = change
+        self.rank = rank
+        self.sparkline = sparkline
+        self.lowVolume = lowVolume
+        self.coinrankingURL = coinrankingURL
+        self.the24HVolume = the24HVolume
+        self.btcPrice = btcPrice
+        self.contractAddresses = contractAddresses
+        self.isWrappedTrustless = isWrappedTrustless
+    }
+    
+    init?(coinLocal: CoinLocal) {
+        self.init(
+            uuid: coinLocal.uuid,
+            name: coinLocal.name
+        )
+    }
 }
+
 
 
 

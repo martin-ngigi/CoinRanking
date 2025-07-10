@@ -18,7 +18,7 @@ struct DashboardView: View {
             
             FavouritesView()
                 .tabItem {
-                    Label("Profile", systemImage: "person.fill")
+                    Label("Favourites", systemImage: "star")
                 }
                 .tag(1)
             
