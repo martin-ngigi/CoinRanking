@@ -10,7 +10,8 @@ import SwiftUI
 struct DashboardView: View {
     var body: some View {
         TabView {
-            HomeView()
+            //HomeView()
+            HomeViewControllerWrapper()
                 .tabItem {
                     Label("Home", systemImage: "house.fill")
                 }
