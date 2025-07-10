@@ -36,6 +36,7 @@ class HomeViewController: UITableViewController {
                 self.coins.append(contentsOf: newCoins)
                 self.tableView.reloadData()
                 self.offset += self.limit
+                self.title = "Coins \(self.coins.count)"
                 self.isLoading = false
             }
         }
@@ -47,26 +48,28 @@ class HomeViewController: UITableViewController {
         coins.count
     }
     
-    override func tableView(
-        _ tableView: UITableView,
-        cellForRowAt indexPath: IndexPath
-    ) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
         let coin = coins[indexPath.row]
         var content = cell.defaultContentConfiguration()
         content.text = coin.name ?? "--"
+        content.textProperties.font = UIFont.systemFont(ofSize: 16)
         cell.contentConfiguration = content
 
+        // Star button setup
         let starButton = UIButton(type: .system)
         starButton.setImage(UIImage(systemName: "star"), for: .normal)
+        starButton.tintColor = .systemBlue
+        starButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30) // IMPORTANT!
         starButton.addAction(UIAction { [weak self] _ in
             self?.favouritesViewModel.saveCoin(coin: coin)
         }, for: .touchUpInside)
+
         cell.accessoryView = starButton
-        
         return cell
     }
+
 
     // MARK: - Pagination
 
@@ -76,6 +79,7 @@ class HomeViewController: UITableViewController {
         
         if offsetY > contentHeight - scrollView.frame.size.height * 2 {
             fetchData()
+            title = "Coins \(coins.count)"
         }
     }
 }
